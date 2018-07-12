@@ -130,6 +130,23 @@ def Quit():
         else:
             messagebox.showinfo('Return', 'You will now return to the application screen')
 
+    def shw(event):
+        y = ''
+        x = text.index("end").split(".")[0]
+
+        for i in range(1, int(x)):
+            y += str(i) + '\n'
+
+        text1.config(state='normal')
+        text1.delete(1.0, 'end')
+        text1.insert(1.0, y)
+        text1.config(state='disabled')
+        display()
+
+    def display():
+        x, y = text.index(INSERT).split('.')
+        str = 'Line ' + x + '| Column' + y
+        label.config(text=str)
 
 
 
@@ -143,26 +160,15 @@ def Quit():
         e=Entry(ad,bg="light cyan")
         e.pack()
 
-        # def search():
-        #     start = 1.0
-        #     while 1:
-        #         pos = text.search(e.get(), start, stopindex=END)
-        #         if not pos:
-        #             break
-        #         text.tag_config(e.get(),bg="red")
-        #         start = pos + "+1c"
-        text.tag_config(e.get(), background='blue')
-
-        def search(text_widget, keyword, tag):
-            pos = '1.0'
-            while True:
-                idx = text_widget.search(keyword, pos, END)
-                if not idx:
+        def search():
+            start = 1.0
+            while 1:
+                pos = text.search(e.get(), start, stopindex=END)
+                if not pos:
                     break
-                pos = '{}+{}c'.format(idx, len(keyword))
-                text_widget.tag_add(tag, idx, pos)
-
-        search(text, e.get(),e.get())
+                text.tag_config(e.get())
+                print(pos)
+                start = pos + "+1c"
 
         v1 = Button(ad, bd=4, width=5, height=1, text="OK", font=15, command=search)
         v1.pack()
@@ -174,56 +180,56 @@ def Quit():
 
 
 
-    t=Toplevel()
+    t=Toplevel()                                   #child window including all functionality
     t.title("Untitled - Gayatri's Text")
     screenwidth=t.winfo_screenwidth()
     screenheight=t.winfo_screenheight()
     t.grid_rowconfigure(0,weight=1)
     t.grid_columnconfigure(0,weight=1)
     t.geometry('600x600')
-    toolbaar = Frame(t, bd=2, relief=RAISED,bg="white")
+    toolbaar = Frame(t, bd=2, relief=RAISED,bg="white")     #Frame for icons
 
-    img = Image.open(r"new.jpg")
+    img = Image.open(r"new.jpg")                           #icon for new file
     photo1 = ImageTk.PhotoImage(img)
     new = Button(toolbaar, bd=5,bg="white", width=22,height=22, relief=FLAT,image=photo1,command=new_file)
     new.pack(side=LEFT, padx=2, pady=2)
 
-    img = Image.open(r"open.jpg")
+    img = Image.open(r"open.jpg")                          #icon for open new file
     photo2 = ImageTk.PhotoImage(img)
     open1=Button(toolbaar, bd=5,bg="grey", width=22,height=22, relief=FLAT,image=photo2,command=opn)
     open1.pack(side=LEFT, padx=2, pady=2)
 
-    img = Image.open(r"cut.jpg")
+    img = Image.open(r"cut.jpg")                          #icon for cut
     photo3 = ImageTk.PhotoImage(img)
     cut=Button(toolbaar, bd=5,bg="grey", width=22,height=22, relief=FLAT,image=photo3,command=lambda :t.focus_get().event_generate("<<Cut>>"))
     cut.pack(side=LEFT, padx=2, pady=2)
 
-    img = Image.open(r"copy.png")
+    img = Image.open(r"copy.png")                        #icon for copy
     photo4 = ImageTk.PhotoImage(img)
     copy = Button(toolbaar, bd=5, bg="grey", width=22, height=22, relief=FLAT, image=photo4,command=lambda: t.focus_get().event_generate("<<Copy>>"))
     copy.pack(side=LEFT, padx=2, pady=2)
 
-    img = Image.open(r"paste.jpg")
+    img = Image.open(r"paste.jpg")                         #icon for paste
     photo5 = ImageTk.PhotoImage(img)
     paste = Button(toolbaar, bd=5, bg="grey", width=22, height=22, relief=FLAT, image=photo5,command=lambda: t.focus_get().event_generate("<<Paste>>"))
     paste.pack(side=LEFT, padx=2, pady=2)
 
-    img = Image.open(r"find.jpg")
+    img = Image.open(r"find.jpg")                         #icon that helps find position of text item
     photo6 = ImageTk.PhotoImage(img)
     find = Button(toolbaar, bd=5, bg="grey", width=22, height=22, relief=FLAT, image=photo6,command=find)
     find.pack(side=LEFT, padx=2, pady=2)
 
-    img = Image.open(r"info.png")
+    img = Image.open(r"info.png")                        #info
     photo7 = ImageTk.PhotoImage(img)
-    info1 = Button(toolbaar, bd=5, bg="grey", width=22, height=22, relief=FLAT, image=photo7)
+    info1 = Button(toolbaar, bd=5, bg="grey", width=22, height=22, relief=FLAT, image=photo7,command=show)
     info1.pack(side=LEFT, padx=2, pady=2)
 
-    img = Image.open(r"undo.png")
+    img = Image.open(r"undo.png")                        #icon for undo operation
     photo8 = ImageTk.PhotoImage(img)
     undo = Button(toolbaar, bd=5, bg="grey", width=22, height=22, relief=FLAT, image=photo8,command=lambda:t.focus_get().event_generate("<<Undo>>"))
     undo.pack(side=LEFT, padx=2, pady=2)
 
-    img = Image.open(r"redo.jpg")
+    img = Image.open(r"redo.jpg")                        #icon for redo operation
     photo9 = ImageTk.PhotoImage(img)
     redo = Button(toolbaar, bd=5, bg="grey", width=22, height=22, relief=FLAT, image=photo9,command=lambda:t.focus_get().event_generate("<<Redo>>"))
     redo.pack(side=LEFT, padx=2, pady=2)
@@ -231,7 +237,15 @@ def Quit():
 
     toolbaar.pack(side=TOP, fill=X)
 
-    text = Text(t,  font=("Arial", 20))
+    #code for line number finding
+
+    text1 = Text(t, bg='powderblue', fg='black', state='disabled', width=3)
+    text1.pack(side=LEFT, fill=Y)
+
+    label = Label(t, text="Line 0| Column 0", bg='powderblue', fg='black')
+    label.pack(side=BOTTOM,anchor=SE)
+
+    text = Text(t,  font=("Arial", 10),height=700)
 
     scroll = Scrollbar(t, command=text.yview)
 
@@ -241,11 +255,12 @@ def Quit():
 
     scroll.pack(side=RIGHT, fill=Y)
 
-    text.pack(side=TOP)
+    text.pack(side=TOP,fill=BOTH)
 
     t.iconbitmap(r'letter-g-icon-png-21704-Windows.ico')
+    text.bind("<Key>", shw)
     # t.pack(fill=BOTH,expand=1)
-    menu=Menu(t)
+    menu=Menu(t)                        #main menu for editor
     t.config(menu=menu,bg="light grey")
 
 
@@ -300,22 +315,16 @@ def Quit():
     root.withdraw()
     mainloop()
 
-
-
-def abc():
-    print("Hello World!")
-
-
-root=Tk()
+root=Tk()                       #root window
 style=ttk.Style(root)
-root.title("Gayatri's Text")
-root.config(bg="light grey")
-screenwidth=root.winfo_screenwidth()
+root.title("Gayatri's Text")    #title of root
+root.config(bg="light grey")    #background color
+screenwidth=root.winfo_screenwidth()       #auto adjust of width and height
 screenheight=root.winfo_screenheight()
 root.grid_rowconfigure(0,weight=1)
 root.grid_columnconfigure(0,weight=1)
 root.geometry("600x600")
-root.iconbitmap(r'letter-g-icon-png-21704-Windows.ico')
+root.iconbitmap(r'letter-g-icon-png-21704-Windows.ico')         #setting icon of window
 # root.resizable("False","False")
 im=Image.open(r"gayu.jpg")
 photo=ImageTk.PhotoImage(im)
@@ -326,11 +335,11 @@ photo=ImageTk.PhotoImage(im)
 
 
 # cv.create_image(50, 50, image=photo)
-l=Label(image=photo)
+l=Label(image=photo)                      #inserting main image
 l.place(x=0,y=0,relwidth=1,relheight=1)
 
-b=Button(l,justify=LEFT,bd=5,width=60,bg="grey",command=Quit)
-img=Image.open(r"jf.jpg")
+b=Button(l,justify=LEFT,bd=5,width=60,bg="grey",command=Quit)    #button forming
+img=Image.open(r"jf.jpg")                                        #inserting image into button
 photo2=ImageTk.PhotoImage(img)
 b.config(image=photo2)
 # cv.create_window(200,200,anchor="center",window=b)
