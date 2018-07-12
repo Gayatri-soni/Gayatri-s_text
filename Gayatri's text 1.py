@@ -78,7 +78,7 @@ def Quit():
 
     def show():
         ab=Toplevel(t)
-        ab.iconbitmap(r'C:\Users\user\Downloads\letter-g-icon-png-21704-Windows.ico')
+        ab.iconbitmap(r'letter-g-icon-png-21704-Windows.ico')
         ab.title("Information")
         l=Label(ab,text="Gayatri's text\nauthor and developer-Gayatri(the decider)",fg="cyan",bg="grey",font=("Elephant",20))
         ab.geometry("580x90")
@@ -133,6 +133,43 @@ def Quit():
 
 
 
+    def find():
+        ad=Toplevel(t)
+        ad.title("Find Text")
+        ad.iconbitmap(r'letter-g-icon-png-21704-Windows.ico')
+        ad.geometry("480x90")
+        l1=Label(ad,bg="light grey",text="enter the text you want to find.")
+        l1.pack()
+        e=Entry(ad,bg="light cyan")
+        e.pack()
+
+        # def search():
+        #     start = 1.0
+        #     while 1:
+        #         pos = text.search(e.get(), start, stopindex=END)
+        #         if not pos:
+        #             break
+        #         text.tag_config(e.get(),bg="red")
+        #         start = pos + "+1c"
+        text.tag_config(e.get(), background='blue')
+
+        def search(text_widget, keyword, tag):
+            pos = '1.0'
+            while True:
+                idx = text_widget.search(keyword, pos, END)
+                if not idx:
+                    break
+                pos = '{}+{}c'.format(idx, len(keyword))
+                text_widget.tag_add(tag, idx, pos)
+
+        search(text, e.get(),e.get())
+
+        v1 = Button(ad, bd=4, width=5, height=1, text="OK", font=15, command=search)
+        v1.pack()
+        mainloop()
+
+
+
 
 
 
@@ -144,49 +181,49 @@ def Quit():
     t.grid_rowconfigure(0,weight=1)
     t.grid_columnconfigure(0,weight=1)
     t.geometry('600x600')
-    toolbaar = Frame(t, bd=2, relief=RAISED)
+    toolbaar = Frame(t, bd=2, relief=RAISED,bg="white")
 
-    img = Image.open(r"C:\Users\user\Desktop\new.jpg")
+    img = Image.open(r"new.jpg")
     photo1 = ImageTk.PhotoImage(img)
-    new = Button(toolbaar, bd=5,bg="grey", width=22,height=22, relief=FLAT,image=photo1,command=new_file)
+    new = Button(toolbaar, bd=5,bg="white", width=22,height=22, relief=FLAT,image=photo1,command=new_file)
     new.pack(side=LEFT, padx=2, pady=2)
 
-    img = Image.open(r"C:\Users\user\Desktop\open.jpg")
+    img = Image.open(r"open.jpg")
     photo2 = ImageTk.PhotoImage(img)
     open1=Button(toolbaar, bd=5,bg="grey", width=22,height=22, relief=FLAT,image=photo2,command=opn)
     open1.pack(side=LEFT, padx=2, pady=2)
 
-    img = Image.open(r"C:\Users\user\Desktop\cut.jpg")
+    img = Image.open(r"cut.jpg")
     photo3 = ImageTk.PhotoImage(img)
     cut=Button(toolbaar, bd=5,bg="grey", width=22,height=22, relief=FLAT,image=photo3,command=lambda :t.focus_get().event_generate("<<Cut>>"))
     cut.pack(side=LEFT, padx=2, pady=2)
 
-    img = Image.open(r"C:\Users\user\Desktop\copy.png")
+    img = Image.open(r"copy.png")
     photo4 = ImageTk.PhotoImage(img)
     copy = Button(toolbaar, bd=5, bg="grey", width=22, height=22, relief=FLAT, image=photo4,command=lambda: t.focus_get().event_generate("<<Copy>>"))
     copy.pack(side=LEFT, padx=2, pady=2)
 
-    img = Image.open(r"C:\Users\user\Desktop\paste.jpg")
+    img = Image.open(r"paste.jpg")
     photo5 = ImageTk.PhotoImage(img)
     paste = Button(toolbaar, bd=5, bg="grey", width=22, height=22, relief=FLAT, image=photo5,command=lambda: t.focus_get().event_generate("<<Paste>>"))
     paste.pack(side=LEFT, padx=2, pady=2)
 
-    img = Image.open(r"C:\Users\user\Desktop\find.jpg")
+    img = Image.open(r"find.jpg")
     photo6 = ImageTk.PhotoImage(img)
-    find = Button(toolbaar, bd=5, bg="grey", width=22, height=22, relief=FLAT, image=photo6)
+    find = Button(toolbaar, bd=5, bg="grey", width=22, height=22, relief=FLAT, image=photo6,command=find)
     find.pack(side=LEFT, padx=2, pady=2)
 
-    img = Image.open(r"C:\Users\user\Desktop\info.png")
+    img = Image.open(r"info.png")
     photo7 = ImageTk.PhotoImage(img)
     info1 = Button(toolbaar, bd=5, bg="grey", width=22, height=22, relief=FLAT, image=photo7)
     info1.pack(side=LEFT, padx=2, pady=2)
 
-    img = Image.open(r"C:\Users\user\Desktop\undo.png")
+    img = Image.open(r"undo.png")
     photo8 = ImageTk.PhotoImage(img)
     undo = Button(toolbaar, bd=5, bg="grey", width=22, height=22, relief=FLAT, image=photo8,command=lambda:t.focus_get().event_generate("<<Undo>>"))
     undo.pack(side=LEFT, padx=2, pady=2)
 
-    img = Image.open(r"C:\Users\user\Desktop\redo.jpg")
+    img = Image.open(r"redo.jpg")
     photo9 = ImageTk.PhotoImage(img)
     redo = Button(toolbaar, bd=5, bg="grey", width=22, height=22, relief=FLAT, image=photo9,command=lambda:t.focus_get().event_generate("<<Redo>>"))
     redo.pack(side=LEFT, padx=2, pady=2)
@@ -206,7 +243,7 @@ def Quit():
 
     text.pack(side=TOP)
 
-    t.iconbitmap(r'C:\Users\user\Downloads\letter-g-icon-png-21704-Windows.ico')
+    t.iconbitmap(r'letter-g-icon-png-21704-Windows.ico')
     # t.pack(fill=BOTH,expand=1)
     menu=Menu(t)
     t.config(menu=menu,bg="light grey")
@@ -278,9 +315,9 @@ screenheight=root.winfo_screenheight()
 root.grid_rowconfigure(0,weight=1)
 root.grid_columnconfigure(0,weight=1)
 root.geometry("600x600")
-root.iconbitmap(r'C:\Users\user\Downloads\letter-g-icon-png-21704-Windows.ico')
+root.iconbitmap(r'letter-g-icon-png-21704-Windows.ico')
 # root.resizable("False","False")
-im=Image.open(r"C:\Users\user\Desktop\gayu.jpg")
+im=Image.open(r"gayu.jpg")
 photo=ImageTk.PhotoImage(im)
 
 # cv = Canvas()
@@ -293,7 +330,7 @@ l=Label(image=photo)
 l.place(x=0,y=0,relwidth=1,relheight=1)
 
 b=Button(l,justify=LEFT,bd=5,width=60,bg="grey",command=Quit)
-img=Image.open(r"C:\Users\user\Desktop\jf.jpg")
+img=Image.open(r"jf.jpg")
 photo2=ImageTk.PhotoImage(img)
 b.config(image=photo2)
 # cv.create_window(200,200,anchor="center",window=b)
