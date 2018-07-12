@@ -2,7 +2,6 @@ import tkinter
 from tkinter import *
 import sys
 import tkinter as ttk
-import PIL
 from PIL import Image,ImageTk
 from tkinter import filedialog
 from tkinter.filedialog import askopenfilename,asksaveasfilename
